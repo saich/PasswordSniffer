@@ -1,0 +1,18 @@
+<html>
+<head>
+<script>
+chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
+	if(request && request.type === "store") {
+		var data = {data: request.data, url: sender.tab.url};
+		var id = parseInt(localStorage.getItem("counter"), 10);
+		if(isNaN(id) || !id)
+			id = 1;
+		localStorage.setItem("id" + id, JSON.stringify(data));
+		localStorage.setItem("counter", id + 1);
+	}
+	
+	sendResponse({});
+});
+</script>
+</head>
+</html>
