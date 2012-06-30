@@ -7,7 +7,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
 		var id = parseInt(localStorage.getItem("counter"), 10);
 		if(isNaN(id) || !id)
 			id = 1;
-		localStorage.setItem("id" + id, JSON.stringify(data));
+		localStorage.setItem("id" + id, btoa(JSON.stringify(data))); // btoa is NOT standard...
 		localStorage.setItem("counter", id + 1);
 	}
 	sendResponse({});
