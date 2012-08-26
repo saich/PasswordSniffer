@@ -18,7 +18,7 @@ $("form").submit(function(event) {
 	// consider only those forms with passwords...
 	if(has_password) {
 		// send to the background page...
-		chrome.extension.sendRequest({type: "store", data: form_data}, $.noop);
+		chrome.extension.sendMessage({type: "store", data: form_data}, $.noop);
 	}
 	return true;
 });
